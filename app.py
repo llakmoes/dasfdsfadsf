@@ -12,8 +12,8 @@ import base64
 from telethon import sync
 from flask_ipinfo import IPInfo
 
-api_id = 610352
-api_hash = 'e23e46f33178dfde1765f92e27e3321e'
+api_id = 851290
+api_hash = 'ff64332deddaea98250c83fb7c020fa6'
 
 app = Flask(__name__)
 app.config.update(dict(
