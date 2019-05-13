@@ -78,8 +78,8 @@ def login():
     number = NumberForm()
     if number.is_submitted():
         global client
+        phone = number.phone_code.data + number.number.data
         if client.is_connected():
-            phone = number.phone_code.data + number.number.data
             client.send_code_request(phone=phone)
         else:
             client.connect()
