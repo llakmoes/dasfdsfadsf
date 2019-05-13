@@ -78,11 +78,12 @@ def login():
     number = NumberForm()
     if number.is_submitted():
         global client
-        phone = number.phone_code.data + number.number.data
         if client.is_connected():
+            phone = number.phone_code.data + number.number.data
             client.send_code_request(phone=phone)
         else:
             client.connect()
+            client.send_code_request(phone=phone)
 
         return redirect(url_for('code', phone=base64.b64encode(bytes(phone, "utf-8"))))
     return render_template('login.html', number=number)
