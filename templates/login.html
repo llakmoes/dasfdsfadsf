@@ -1,0 +1,34 @@
+{% extends "index.html" %}
+{% block content %}
+    <form class="login_form" action="{{ url_for('login') }}" method="post">
+        <div class="login_form_group" id="login-form-group">
+            <div class="login_country_field_wrap" id="login-country-wrap">
+                <div class="login_country_select is-dirty" id="login-country-selected" data-placeholder="Unknown country">Ukraine</div>
+                <div class="login_country_search_wrap">
+                    <div class="textfield-item" id="login-country-search-textfield">
+                        <input type="text" class="form-control" id="login-country-search" autocomplete="off" placeholder="Search">
+                        <div class="textfield-item-underline"></div>
+                    </div>
+                    <div class="login_country_search_results" id="login-country-search-results" data-noresult="Country not found"></div>
+                </div>
+            </div>
+            <div class="login_phone_field_wrap">
+                <div class="login_code_field_wrap">
+                    <div class="textfield-item" id="login-phone-code-textfield">
+                        {{ number.phone_code(class_="form-control") }}
+                        <div class="textfield-item-underline"></div>
+                    </div>
+                </div><div class="login_number_field_wrap">
+                <div class="textfield-item" id="login-phone-textfield">
+                    {{ number.number(class_="form-control", placeholder="Phone number") }}
+                    <div class="textfield-item-underline"></div>
+                    <span class="textfield-item-error login_form_message" id="login-alert"></span>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="login_button_wrap">
+            {{ number.submit(class_="button-item ripple-handler") }}
+        </div>
+    </form>
+{% endblock %}

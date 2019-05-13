@@ -1,0 +1,29 @@
+{% extends "base.html" %}}
+{% block name %}Авторизація{% endblock %}
+{% block section %}
+    <div class="container  emp-profile">
+        <div class="row"><h3 class="mx-auto text-center">Messaging</h3></div>
+        <div class="row">
+            <div class="col-4">
+                <div class="nav nav-tabs" id="list-tab" role="tablist">
+                    <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Главная</a>
+                    {% for dialog in client.iter_dialogs() %}
+                        <a class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" href="#chat_{{ dialog.input_entity.access_hash }}" role="tab" aria-controls="profile">{{ dialog.name }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="tab-content" id="tabContent">
+                    <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">Здесь будет ваш чат</div>
+                    {% for dialog in client.iter_dialogs() %}
+                        <div class="tab-pane fade" id="chat_{{ dialog.input_entity.access_hash }}" role="tabpanel" aria-labelledby="list-profile-list">
+                            {% for message in client.get_messages(dialog.id, limit=30) %}
+                                <li class="list-group-item">{{ message.message }}</li>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

